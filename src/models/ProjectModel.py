@@ -1,5 +1,5 @@
-from .BaseDataModel import BaseDataModel
-from models.db_schemes import Project
+from src.models.BaseDataModel import BaseDataModel
+from src.models.db_schemes.project import Project
 from .enums.DataBaseEnum import DataBaseEnum
 
 class ProjectModel(BaseDataModel):
@@ -48,3 +48,4 @@ class ProjectModel(BaseDataModel):
             )
 
         return projects, total_pages
+    
