@@ -127,7 +127,10 @@ async def process_endpoint(request: Request, project_id: str, process_request: P
     chunk_model = ChunkModel(
         db_client=request.app.db_client
     )
-
+    if do_reset == 1:
+        _ = await chunk_model.delete_chunks_by_project_id(
+            project_id=project.id
+        )
    
 
     no_records = await chunk_model.insert_many_chunks(chunks=file_chunks_records)

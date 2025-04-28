@@ -1,8 +1,8 @@
 
 from .BaseDataModel import BaseDataModel
-from src.models.db_schemes import DataChunk
+from src.models.db_schemes.data_chunk import DataChunk
 from .enums.DataBaseEnum import DataBaseEnum
-from bson.objectid import ObjectId
+from bson  import ObjectId
 from pymongo import InsertOne
 
 class ChunkModel(BaseDataModel):
