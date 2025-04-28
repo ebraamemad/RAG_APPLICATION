@@ -10,6 +10,8 @@ from src.routes.schemes.data import ProcessRequest
 
 from src.models.enums.ResponseEnums import ResponseSignal
 from src.models.ProjectModel import ProjectModel
+from src.models.ChunkModel import ChunkModel
+from src.models.db_schemes.data_chunk import DataChunk
 
 import logging
 from src.routes.schemes.data import ProcessRequest
@@ -126,10 +128,7 @@ async def process_endpoint(request: Request, project_id: str, process_request: P
         db_client=request.app.db_client
     )
 
-    if do_reset == 1:
-        _ = await chunk_model.delete_chunks_by_project_id(
-            project_id=project.id
-        )
+   
 
     no_records = await chunk_model.insert_many_chunks(chunks=file_chunks_records)
 

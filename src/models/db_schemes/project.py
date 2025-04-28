@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field, validator
 from typing import Optional
-from bson.objectid import ObjectId
-
+from bson import ObjectId
 class Project(BaseModel):
     # The id when you do an insert, but when you do a get project or data, it will be there
     id: Optional[ObjectId] = Field(None, alias="_id")
