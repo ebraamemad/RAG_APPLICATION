@@ -13,3 +13,18 @@ class DataChunk(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True  
+        
+    @classmethod
+    def get_indexes(cls):
+        return [
+            {
+                "key": [
+                    ("chunk_project_id", 1)
+                ],
+                "name": "chunk_project_id_index_1",
+                #قيمة unique بتعبر عن ان الحقل ده فريد ولا لأ
+                #يعني مفيش اتنين chunk بنفس ال project id
+                #ولكن عادي يوجد chunk بنفس ال project id
+                "unique": False
+            }
+        ]

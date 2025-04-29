@@ -18,3 +18,20 @@ class Project(BaseModel):
     # لو عايز تتصرف معاه ك string او int او float او غيره
     class Config:
         arbitrary_types_allowed = True
+        
+    @classmethod
+    def get_indexes(cls):
+
+        return [
+            {
+                "key": [
+                    ("project_id", 1)
+                ],
+                "name": "project_id_index_1",
+                  #قيمة unique بتعبر عن ان الحقل ده فريد ولا لأ
+                #هنا لا يوجد p[roject_id] بنفس القيمة
+                #يعني مفيش اتنين project بنفس ال project id
+            
+                "unique": True
+            }
+        ]
