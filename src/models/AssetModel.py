@@ -1,7 +1,6 @@
-from src.models.BaseDataModel import BaseDataModel
+from .BaseDataModel import BaseDataModel
 from src.models.db_schemes.asset import Asset
 from src.models.enums.DataBaseEnum import DataBaseEnum
-from src.models.enums.AssetTypeEnum import AssetTypeEnum
 from bson import ObjectId
 
 class AssetModel(BaseDataModel):

@@ -7,7 +7,7 @@ class ProjectModel(BaseDataModel):
     def __init__(self, db_client: object):
         super().__init__(db_client=db_client)
         self.collection = self.db_client[DataBaseEnum.COLLECTION_PROJECT_NAME.value]
-        
+
     @classmethod
     async def create_instance(cls, db_client: object):
         instance = cls(db_client)
@@ -30,13 +30,9 @@ class ProjectModel(BaseDataModel):
     async def create_project(self, project: Project):
 
         result = await self.collection.insert_one(project.dict(by_alias=True, exclude_unset=True))
-        #انا بديه project هيرجعلي نفس البروجيكت ولكن مع تحديث id 
-
-        project._id = result.inserted_id
+        project.id = result.inserted_id
 
         return project
-    #or return result.inserted_id
-    
 
     async def get_project_or_create_one(self, project_id: str):
 
@@ -46,12 +42,11 @@ class ProjectModel(BaseDataModel):
 
         if record is None:
             # create new project
-            #project id اللي انت ملقتهوش create
             project = Project(project_id=project_id)
             project = await self.create_project(project=project)
 
             return project
-        #عايز احول  dict to projectmodel
+        
         return Project(**record)
 
     async def get_all_projects(self, page: int=1, page_size: int=10):
@@ -72,4 +67,3 @@ class ProjectModel(BaseDataModel):
             )
 
         return projects, total_pages
-    

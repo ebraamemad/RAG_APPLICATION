@@ -1,8 +1,7 @@
-
 from .BaseDataModel import BaseDataModel
 from src.models.db_schemes.data_chunk import DataChunk
-from .enums.DataBaseEnum import DataBaseEnum
-from bson  import ObjectId
+from src.models.enums.DataBaseEnum import DataBaseEnum
+from bson import ObjectId
 from pymongo import InsertOne
 
 class ChunkModel(BaseDataModel):
@@ -10,6 +9,7 @@ class ChunkModel(BaseDataModel):
     def __init__(self, db_client: object):
         super().__init__(db_client=db_client)
         self.collection = self.db_client[DataBaseEnum.COLLECTION_CHUNK_NAME.value]
+
     @classmethod
     async def create_instance(cls, db_client: object):
         instance = cls(db_client)
@@ -27,7 +27,7 @@ class ChunkModel(BaseDataModel):
                     name=index["name"],
                     unique=index["unique"]
                 )
-                
+
     async def create_chunk(self, chunk: DataChunk):
         result = await self.collection.insert_one(chunk.dict(by_alias=True, exclude_unset=True))
         chunk._id = result.inserted_id
@@ -42,11 +42,6 @@ class ChunkModel(BaseDataModel):
             return None
         
         return DataChunk(**result)
-#انت لما تديله ملف وعايزه يحوله الي chunks ويخنه في الداتا بيز متخلوش يمشي زي for loob يعني يعمل insert لكل chunk لوحده
-#  ده هيبقي بطيء جدا لو عندك 1000 chunk مثلا
-#  فممكن نعمل batch insert يعني نعمل insert لكل chunk في batch لوحده
-#  يعني لو عندك 1000 chunk ممكن تقسمهم علي 10 batches كل batch فيها 100 chunk
-#  وده هيبقي اسرع بكتير من انك تعمل insert لكل chunk لوحده
 
     async def insert_many_chunks(self, chunks: list, batch_size: int=100):
 
@@ -69,6 +64,4 @@ class ChunkModel(BaseDataModel):
 
         return result.deleted_count
     
-    
-
     
