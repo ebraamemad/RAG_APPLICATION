@@ -27,7 +27,7 @@ class ChunkModel(BaseDataModel):
                     name=index["name"],
                     unique=index["unique"]
                 )
-
+                
     async def create_chunk(self, chunk: DataChunk):
         result = await self.collection.insert_one(chunk.dict(by_alias=True, exclude_unset=True))
         chunk._id = result.inserted_id
